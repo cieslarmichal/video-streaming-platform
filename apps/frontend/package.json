@@ -3,11 +3,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "start": "vite",
     "build": "tsc --noEmit && vite build",
     "build:dev": "tsc --noEmit && vite build --mode development",
-    "test": "npm run test:unit && npm run test:e2e",
-    "test:unit": "vitest --run",
+    "test": "vitest --config vitest.config.js",
+    "test:ci": "npm run test -- --run",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "preview": "vite preview"

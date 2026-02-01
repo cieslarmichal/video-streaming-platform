@@ -19,7 +19,7 @@
     "build": "tsc --build tsconfig.prod.json",
     "build:dev": "tsc --build tsconfig.json",
     "test": "NODE_ENV=test vitest --config vitest.config.js",
-    "test:run": "npm run test -- --run",
+    "test:ci": "npm run test -- --run",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix"
   },
