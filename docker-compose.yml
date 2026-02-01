@@ -50,17 +50,6 @@ services:
     volumes:
       - shared-storage:/shared
 
-  video-streaming-platform-encoding-director:
-    container_name: video-streaming-platform-encoding-director
-    build:
-      context: .
-      dockerfile: ./apps/encoding-director/Dockerfile
-    environment:
-      - NODE_ENV=development
-    depends_on:
-      video-streaming-platform-rabbitmq:
-        condition: service_healthy
-
   video-streaming-platform-encoder:
     container_name: video-streaming-platform-encoder
     build:
