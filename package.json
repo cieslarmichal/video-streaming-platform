@@ -1,0 +1,39 @@
+{
+  "name": "video-streaming-platform",
+  "scripts": {
+    "build": "turbo run build",
+    "build:dev": "turbo run build:dev",
+    "test": "turbo run test:ci --concurrency 5",
+    "lint": "turbo run lint --concurrency 5",
+    "lint:fix": "turbo run lint:fix"
+  },
+  "dependencies": {
+    "drizzle-kit": "0.31.8",
+    "drizzle-orm": "0.45.1"
+  },
+  "devDependencies": {
+    "@stylistic/eslint-plugin": "5.7.1",
+    "@types/node": "25.1.0",
+    "eslint": "9.39.2",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-perfectionist": "5.4.0",
+    "prettier": "3.8.1",
+    "turbo": "2.8.1",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.54.0",
+    "vitest": "4.0.18"
+  },
+  "volta": {
+    "node": "25.5.0",
+    "npm": "11.8.0"
+  },
+  "engines": {
+    "node": ">=25",
+    "npm": ">=11"
+  },
+  "workspaces": [
+    "apps/*",
+    "libs/*"
+  ],
+  "packageManager": "npm@11.8.0"
+}

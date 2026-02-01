@@ -1,0 +1,39 @@
+{
+  "name": "@apps/api",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch-path=./src --watch-path=./config src/index.ts",
+    "build": "tsc --build tsconfig.prod.json",
+    "build:dev": "tsc --build tsconfig.json",
+    "test": "NODE_ENV=test vitest --config vitest.config.js",
+    "test:ci": "npm run test -- --run",
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push"
+  },
+  "dependencies": {
+    "@libs/logger": "*",
+    "@libs/s3": "*",
+    "@libs/uuid": "*",
+    "@fastify/cookie": "11.0.2",
+    "@fastify/cors": "11.2.0",
+    "@fastify/multipart": "9.4.0",
+    "@fastify/type-provider-typebox": "6.1.0",
+    "bcrypt": "6.0.0",
+    "config": "4.1.1",
+    "fastify": "5.6.2",
+    "jsonwebtoken": "9.0.3",
+    "pg": "8.16.3",
+    "typebox": "1.0.75"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "10.2.0",
+    "@types/bcrypt": "6.0.0",
+    "@types/config": "3.3.5",
+    "@types/jsonwebtoken": "9.0.10",
+    "@types/pg": "8.16.0"
+  }
+}

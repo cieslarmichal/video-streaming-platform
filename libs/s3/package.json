@@ -1,0 +1,30 @@
+{
+  "name": "@libs/s3",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/src/index.js",
+      "types": "./dist/src/index.d.ts"
+    },
+    "./tests": {
+      "import": "./dist/tests/index.js",
+      "types": "./dist/tests/index.d.ts"
+    }
+  },
+  "types": "dist/src/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "build": "tsc --build tsconfig.prod.json",
+    "build:dev": "tsc --build tsconfig.json",
+    "test": "NODE_ENV=test vitest --config vitest.config.js",
+    "test:run": "npm run test -- --run",
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "3.980.0",
+    "@aws-sdk/lib-storage": "3.980.0"
+  }
+}

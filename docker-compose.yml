@@ -1,0 +1,93 @@
+services:
+  video-streaming-platform-rabbitmq:
+    container_name: video-streaming-platform-rabbitmq
+    image: rabbitmq:3.9.7-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: test
+      RABBITMQ_DEFAULT_PASS: test
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 5s
+      timeout: 30s
+      retries: 5
+
+  video-streaming-platform-redis:
+    container_name: video-streaming-platform-redis
+    image: "bitnami/redis:latest"
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - "6379:6379"
+
+  video-streaming-platform-api:
+    container_name: video-streaming-platform-api
+    build:
+      context: .
+      dockerfile: ./apps/api/Dockerfile
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "5000:5000"
+    depends_on:
+      video-streaming-platform-redis:
+        condition: service_started
+      video-streaming-platform-rabbitmq:
+        condition: service_healthy
+
+  video-streaming-platform-downloader:
+    container_name: video-streaming-platform-downloader
+    build:
+      context: .
+      dockerfile: ./apps/downloader/Dockerfile
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      video-streaming-platform-rabbitmq:
+        condition: service_healthy
+    volumes:
+      - shared-storage:/shared
+
+  video-streaming-platform-encoder:
+    container_name: video-streaming-platform-encoder
+    build:
+      context: .
+      dockerfile: ./apps/encoder/Dockerfile
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      video-streaming-platform-rabbitmq:
+        condition: service_healthy
+    volumes:
+      - shared-storage:/shared
+
+  video-streaming-platform-uploader:
+    container_name: video-streaming-platform-uploader
+    build:
+      context: .
+      dockerfile: ./apps/uploader/Dockerfile
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      video-streaming-platform-rabbitmq:
+        condition: service_healthy
+    volumes:
+      - shared-storage:/shared
+
+  video-streaming-platform-playlist-sticher:
+    container_name: video-streaming-platform-playlist-sticher
+    build:
+      context: .
+      dockerfile: ./apps/playlist-sticher/Dockerfile
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      video-streaming-platform-rabbitmq:
+        condition: service_healthy
+    volumes:
+      - shared-storage:/shared
+
+volumes:
+  shared-storage:

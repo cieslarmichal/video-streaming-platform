@@ -1,0 +1,23 @@
+{
+  "name": "@libs/logger",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/src/index.js",
+      "types": "./dist/src/index.d.ts"
+    }
+  },
+  "types": "dist/src/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "build": "tsc --build tsconfig.json",
+    "build:dev": "tsc --build tsconfig.json",
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix"
+  },
+  "dependencies": {
+    "pino": "10.3.0"
+  }
+}

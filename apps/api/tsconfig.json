@@ -1,0 +1,24 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+  },
+  "include": ["src/**/*.ts", "tests/**/*.ts"],
+    "references": [
+    {
+      "path": "../../libs/amqp/tsconfig.json"
+    },
+    {
+      "path": "../../libs/contracts/tsconfig.json"
+    },
+    {
+      "path": "../../libs/logger/tsconfig.json"
+    },
+    {
+      "path": "../../libs/s3/tsconfig.json"
+    },
+    {
+      "path": "../../libs/uuid/tsconfig.json"
+    },
+  ]
+}

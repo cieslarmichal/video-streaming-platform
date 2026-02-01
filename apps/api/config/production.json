@@ -1,0 +1,7 @@
+{
+  "database": {
+    "ssl": true
+  },
+  "hashSaltRounds": 14,
+  "logLevel": "info"
+}

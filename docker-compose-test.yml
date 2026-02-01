@@ -1,0 +1,55 @@
+services:
+  localstack-test:
+    image: localstack/localstack
+    container_name: video-streaming-platform-localstack-test
+    ports:
+      - "4566:4566"
+    environment:
+      SERVICES: s3
+      AWS_DEFAULT_REGION: eu-central-1
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      AWS_ENDPOINT: http://127.0.0.1:4566
+      DEBUG: 1
+      DOCKER_HOST: unix:///var/run/docker.sock
+      DATA_DIR: /tmp/localstack/data
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+  database-postgres-test:
+    image: postgres:17
+    container_name: video-streaming-platform-postgres-test
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - video-streaming-platform-pgdata:/var/lib/postgresql/data
+
+  rabbitmq-test:
+    container_name: video-streaming-platform-rabbitmq-test
+    image: rabbitmq:3.9.7-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: test
+      RABBITMQ_DEFAULT_PASS: test
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 5s
+      timeout: 30s
+      retries: 5
+
+  redis-test:
+    container_name: video-streaming-platform-redis-test
+    image: "bitnami/redis:latest"
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - "6379:6379"
+
+volumes:
+  video-streaming-platform-pgdata:
